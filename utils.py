@@ -1,74 +1,43 @@
 import chess
+import tkinter as tk
 from chess_board import display_board
 
-def practice_openings(board):
-    print("\nChoose an Opening:")
-    openings = {
-        "1": "Ruy Lopez",
-        "2": "Sicilian Defense",
-        "3": "French Defense",
-        "4": "Caro-Kann Defense",
-        "5": "Queen's Gambit",
-        "6": "Halloween Gambit"
-    }
-    for num, opening in openings.items():
-        print(f"{num}. {opening}")
-
-    choice = input("Enter the number of your choice: ")
-
-    opening_moves = {
-        "1": ["e4", "e5", "Nf3", "Nc6", "Bb5"],  # Ruy Lopez
-        "2": ["e4", "c5"],  # Sicilian Defense
-        "3": ["e4", "e6"],  # French Defense
-        "4": ["e4", "c6"],  # Caro-Kann Defense
-        "5": ["d4", "d5", "c4"],  # Queen's Gambit
-        "6": ["e4", "e5", "Nf3", "Nf6", "Nxe5", "Nc6", "Nxc6"]  # Halloween Gambit
-    }
-
-    if choice in opening_moves:
-        moves = opening_moves[choice]
-        print(f"\nPracticing {openings[choice]}...")
-        for move in moves:
-            board.push_san(move)  # Apply each move
-        display_board(board)  # Show updated board
-    else:
-        print("Invalid choice.")
-
-def practice_defenses(board):
-    print("\nChoose a Defense:")
-    defenses = {
-        "1": "Sicilian Defense",
-        "2": "French Defense",
-        "3": "Caro-Kann Defense",
-        "4": "Pirc Defense",
-        "5": "Modern Defense",
-        "6": "Alekhine Defense"
-    }
-    for num, defense in defenses.items():
-        print(f"{num}. {defense}")
-
-    choice = input("Enter the number of your choice: ")
-
+def practice_defense(board, defense):
+    print(f"Practicing {defense}")  # Debugging statement
     defense_moves = {
-        "1": ["e4", "c5"],  # Sicilian Defense
-        "2": ["e4", "e6"],  # French Defense
-        "3": ["e4", "c6"],  # Caro-Kann Defense
-        "4": ["e4", "d6"],  # Pirc Defense
-        "5": ["e4", "g6"],  # Modern Defense
-        "6": ["e4", "Nf6"]  # Alekhine Defense
+        "Sicilian Defense": ["e4", "c5"],
+        "French Defense": ["e4", "e6"],
+        "Caro-Kann Defense": ["e4", "c6"],
+        "Pirc Defense": ["e4", "d6"],
+        "Halloween Gambit": ["e4", "e5", "Nf3", "Nc6", "Nxe5", "Nxe5"]
     }
 
-    if choice in defense_moves:
-        moves = defense_moves[choice]
-        print(f"\nPracticing {defenses[choice]}...")
+    if defense in defense_moves:
+        moves = defense_moves[defense]
+        print(f"\nPracticing {defense}...")  # Debugging statement
         for move in moves:
             board.push_san(move)  # Apply each move
         display_board(board)  # Show updated board
+        show_chess_board(board)  # Show the chess board in a new window
     else:
         print("Invalid choice.")
+
+def show_chess_board(board):
+    # Create a new window for the chess board
+    board_window = tk.Toplevel()
+    board_window.title("Chess Board")
+
+    # Create a frame for the chess board
+    board_frame = tk.Frame(board_window)
+    board_frame.pack(pady=20)
+
+    # Display the chess board
+    board_str = str(board)
+    for row in board_str.split('\n'):
+        tk.Label(board_frame, text=row).pack()
 
 def open_play(board):
-    print("\nStarting open play mode...")
+    print("\nStarting open play mode...")  # Debugging statement
     while not board.is_game_over():
         print(board)
         move = input("Enter your move (or 'q' to quit): ")
