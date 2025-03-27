@@ -26,7 +26,7 @@ def create_menu(root):
         }
 
         for num, defense in defenses.items():
-            tk.Button(defenses_frame, text=defense, command=lambda d=defense: practice_defense(board, d)).pack(pady=5)
+            tk.Button(defenses_frame, text=defense, command=lambda d=defense: practice_defense(board, d, root)).pack(pady=5)
 
         tk.Button(defenses_frame, text="Back", command=lambda: create_menu(root)).pack(pady=5)
 
